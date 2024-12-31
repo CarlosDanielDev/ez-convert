@@ -1,0 +1,24 @@
+{
+  "name": "ez-convert",
+  "version": "1.0.0",
+  "description": "Um app simples para conversões fáceis",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CarlosDanielDev/ez-convert.git"
+  },
+  "author": "CarlosDanielDev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CarlosDanielDev/ez-convert/issues"
+  },
+  "homepage": "https://github.com/CarlosDanielDev/ez-convert#readme",
+  "dependencies": {
+    "next": "^13.1.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
