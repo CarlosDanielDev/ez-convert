@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/CarlosDanielDev/ez-convert#readme",
   "dependencies": {
+    "@vercel/speed-insights": "^1.1.0",
     "next": "^13.1.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
