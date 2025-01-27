@@ -5,7 +5,7 @@ function Nandinha() {
 
       <br />
 
-      <small>p.s: ダニエル</small>
+      <small>by: ダニエル</small>
     </div>
   );
 }
