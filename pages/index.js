@@ -3,11 +3,15 @@ import styles from "./styles.module.css";
 import { useCallback, useState } from "react";
 
 function Home() {
-  const [currencyList, setCurrencyList] = useState([]);
+  const [, setCurrencyList] = useState([]);
 
   const handleAddNewCurrency = useCallback((currency) => {
     setCurrencyList((prevState) => [...prevState, currency]);
   }, []);
+
+  console.log({
+    handleAddNewCurrency,
+  });
 
   return (
     <>
