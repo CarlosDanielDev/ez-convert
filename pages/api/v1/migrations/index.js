@@ -22,12 +22,13 @@ export default async function migrations(request, response) {
 
   try {
     switch (request.method) {
-      case "GET":
+      case "GET": {
         const pendingMigrations = await migrationRunner(
           defaultMigrationOptions,
         );
         return response.status(200).json(pendingMigrations);
-      case "POST":
+      }
+      case "POST": {
         const migratedMigrations = await migrationRunner({
           ...defaultMigrationOptions,
           dryRun: false,
@@ -37,6 +38,7 @@ export default async function migrations(request, response) {
           return response.status(201).json(migratedMigrations);
         }
         return response.status(200).json(migratedMigrations);
+      }
       default:
         return response.status(405).end();
     }
