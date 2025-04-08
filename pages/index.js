@@ -18,7 +18,7 @@ function Home() {
       <SpeedInsights />
       <div className={styles.container}>
         <h1 className={styles.title}>Easy Convert</h1>
-
+        teste
         <button className={styles["button-primary"]}>Add Currency</button>
       </div>
     </>
