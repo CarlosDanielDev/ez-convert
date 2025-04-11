@@ -21,6 +21,11 @@ function Home() {
         teste
         <button className={styles["button-primary"]}>Add Currency</button>
       </div>
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8636863724055857"
+        crossorigin="anonymous"
+      ></script>
     </>
   );
 }
