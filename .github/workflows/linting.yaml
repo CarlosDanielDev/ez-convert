@@ -45,3 +45,23 @@ jobs:
       - run: npm ci
 
       - run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
+
+  secretlint:
+    name: secretlint 
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "lts/hydrogen"
+
+      - run: npm ci
+
+        options: >
+          -v ${{ github.workspace }}:${{ github.workspace }}
+          -w=${{ github.workspace }}
+          --rm
+      - run: npx secretlint  ${{ env.GIT_DIFF_FILTERED }}
