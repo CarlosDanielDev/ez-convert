@@ -58,5 +58,7 @@ jobs:
         with:
           node-version: "lts/hydrogen"
 
+      - uses: technote-space/get-diff-action@v6
+
       - run: npm ci
       - run: npx secretlint  ${{ env.GIT_DIFF_FILTERED }}
