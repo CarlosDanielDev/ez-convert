@@ -1,1 +1,1 @@
-# npx secretlint "**/*"
+npx secretlint "**/*"
