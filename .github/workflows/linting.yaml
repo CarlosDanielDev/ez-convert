@@ -59,9 +59,4 @@ jobs:
           node-version: "lts/hydrogen"
 
       - run: npm ci
-
-        options: >
-          -v ${{ github.workspace }}:${{ github.workspace }}
-          -w=${{ github.workspace }}
-          --rm
       - run: npx secretlint  ${{ env.GIT_DIFF_FILTERED }}
