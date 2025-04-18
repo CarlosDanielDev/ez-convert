@@ -5,6 +5,18 @@ const fetchAPI = async (key) => {
   return res.json();
 };
 
+function useStatus() {
+  const route = "/api/v1/status";
+  const { data, isLoading } = useSWR(route, fetchAPI, {
+    refreshInterval: 2000,
+  });
+
+  return {
+    data,
+    isLoading,
+  };
+}
+
 const LOADING_TEXT = "Loading...";
 
 export default function StatusPage() {
@@ -18,9 +30,7 @@ export default function StatusPage() {
 }
 
 function UpdatedAt() {
-  const { data, isLoading } = useSWR("/api/v1/status", fetchAPI, {
-    refreshInterval: 2000,
-  });
+  const { data, isLoading } = useStatus();
 
   const getValue = (value) =>
     !isLoading && value !== undefined ? value : LOADING_TEXT;
@@ -39,9 +49,7 @@ function UpdatedAt() {
 }
 
 function DatabaseStatus() {
-  const { data, isLoading } = useSWR("/api/v1/status", fetchAPI, {
-    refreshInterval: 2000,
-  });
+  const { data, isLoading } = useStatus();
   const db = data?.dependencies?.database;
 
   const getValue = (value) =>
