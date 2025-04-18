@@ -6,7 +6,8 @@ const fetchAPI = async (key) => {
 };
 
 function useStatus() {
-  const { data, isLoading } = useSWR("/api/v1/status", fetchAPI, {
+  const route = "/api/v1/status";
+  const { data, isLoading } = useSWR(route, fetchAPI, {
     refreshInterval: 2000,
   });
 
