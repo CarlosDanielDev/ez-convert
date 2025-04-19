@@ -1,4 +1,5 @@
 import { Client } from "pg";
+import { ServiceError } from "./errors";
 
 function getSSLValues() {
   if (process.env.POSTGRES_CA) {
@@ -17,9 +18,11 @@ async function query(queryObject) {
     const result = await client.query(queryObject);
     return result;
   } catch (error) {
-    console.log("\n Error inside catch database.js");
-    console.error(error);
-    throw error;
+    const serviceErrorObject = new ServiceError({
+      cause: error,
+      message: "Error on connect or query database",
+    });
+    throw serviceErrorObject;
   } finally {
     await client?.end();
   }
