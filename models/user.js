@@ -1,0 +1,117 @@
+import database from "infra/database";
+import { ValidationError } from "infra/errors";
+
+async function create(userInputValues) {
+  await ensureEmailExists(userInputValues);
+  await ensureUsernameExists(userInputValues);
+  await ensurePasswordExists(userInputValues);
+  await validateUniqueUsername(userInputValues.username);
+  await validateUniqueEmail(userInputValues.email);
+
+  const newUser = await runInserQuery(userInputValues);
+
+  return newUser;
+
+  async function ensurePasswordExists(userInputValues) {
+    const error = new ValidationError({
+      message: "Password must be filled",
+      action: "Please, fill the field password and try again",
+    });
+    if (!("password" in userInputValues)) throw error;
+    if (userInputValues?.password === "") throw error;
+    return;
+  }
+
+  async function ensureEmailExists(userInputValues) {
+    const error = new ValidationError({
+      message: "E-mail must be filled",
+      action: "Please, fill the field e-mail and try again",
+    });
+
+    if (!("email" in userInputValues)) throw error;
+    if (userInputValues?.email === "") throw error;
+    return;
+  }
+
+  async function ensureUsernameExists(userInputValues) {
+    const error = new ValidationError({
+      message: "Username must be filled",
+      action: "Please, fill the field username and try again",
+    });
+
+    if (!("username" in userInputValues)) throw error;
+    if (userInputValues?.username === "") throw error;
+
+    return;
+  }
+
+  async function queryResultString(values) {
+    return await database.query({
+      text: `
+      SELECT
+        ${values.column}
+      FROM
+        ${values.table}
+      WHERE
+        LOWER(${values.column}) = LOWER($1)
+      ;`,
+      values: [values.value],
+    });
+  }
+
+  async function validateUniqueUsername(username) {
+    const results = await queryResultString({
+      column: "username",
+      table: "users",
+      value: username,
+    });
+
+    if (results.rowCount > 0) {
+      throw new ValidationError({
+        message: "Username already in use",
+        action: "Use another username to make the register",
+      });
+    }
+  }
+
+  async function validateUniqueEmail(email) {
+    const results = await queryResultString({
+      column: "email",
+      table: "users",
+      value: email,
+    });
+
+    if (results.rowCount > 0) {
+      throw new ValidationError({
+        message: "E-mail already in use",
+        action: "Use another e-mail to make the register",
+      });
+    }
+  }
+
+  async function runInserQuery(userInputValues) {
+    const results = await database.query({
+      text: `
+      INSERT INTO 
+        users (username, email, password) 
+      VALUES 
+        ($1, $2, $3)
+      RETURNING
+        *
+      ;`,
+      values: [
+        userInputValues.username,
+        userInputValues.email,
+        userInputValues.password,
+      ],
+    });
+
+    return results.rows[0];
+  }
+}
+
+const user = {
+  create,
+};
+
+export default user;
