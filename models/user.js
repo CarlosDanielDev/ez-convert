@@ -32,9 +32,10 @@ async function runSelectQuery(username) {
 }
 
 async function create(userInputValues) {
-  await ensureEmailExists(userInputValues);
   await ensureUsernameExists(userInputValues);
+  await ensureEmailExists(userInputValues);
   await ensurePasswordExists(userInputValues);
+
   await validateUniqueUsername(userInputValues.username);
   await validateUniqueEmail(userInputValues.email);
   await hashPasswordInObject(userInputValues);
