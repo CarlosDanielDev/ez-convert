@@ -46,6 +46,7 @@ describe("POST /api/v1/users", () => {
         "123",
         userInDatabase.password,
       );
+
       const incorrectPasswordMatch = await password.compare(
         "2345",
         userInDatabase.password,
